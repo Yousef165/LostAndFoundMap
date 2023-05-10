@@ -46,8 +46,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>{
         // on below line we are setting data
         // to our views of recycler view item.
 
-        int id = position + 1;
-
         LostAndFound modal = LostAndFoundArrayList.get(position);
         holder.dataIdTV.setText(modal.get_Id());
         holder.dataNameTV.setText(modal.get_Name());
@@ -62,7 +60,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>{
                 // inside on click listener method we are calling a method to pass our data to our activity.
                 Intent intent = new Intent(context, Delete.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("id", String.valueOf(id));
+                bundle.putString("id", modal.get_Id());
                 bundle.putString("name", modal.get_Name());
                 bundle.putString("phone", modal.get_Phone());
                 bundle.putString("description", modal.get_Description());

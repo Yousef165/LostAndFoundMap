@@ -43,7 +43,7 @@
                     android:id="@+id/radioMale"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:checked="false"
+                    android:checked="true"
                     android:text=" Lost"
                     android:textSize="20dp" />
 

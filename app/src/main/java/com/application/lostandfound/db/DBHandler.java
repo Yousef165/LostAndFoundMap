@@ -2,11 +2,14 @@ package com.application.lostandfound.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.application.lostandfound.MainActivity;
 import com.application.lostandfound.model.LostAndFound;
+import com.application.lostandfound.service.Delete;
 
 import java.util.ArrayList;
 
@@ -133,6 +136,16 @@ public class DBHandler extends SQLiteOpenHelper {
         return LostAndFoundArrayList;
     }
 
+    // delete data from database by id
+    public void deleteData(String id, Context context) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, ID_COL + " = ?", new String[]{id});
+        db.close();
+
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // this method is called to check if the table exists already.
@@ -140,11 +153,5 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // delete data from database by id
-    public void deleteData(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, ID_COL + " = ?", new String[]{id});
-        db.close();
-    }
 
 }

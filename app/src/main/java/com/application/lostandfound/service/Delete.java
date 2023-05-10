@@ -53,11 +53,7 @@ public class Delete extends AppCompatActivity {
 
         deleteBtn.setOnClickListener(v -> {
             dbHandler = new DBHandler(Delete.this);
-            dbHandler.deleteData(id);
-
-            Intent intent = new Intent(Delete.this, MainActivity.class);
-            startActivity(intent);
-
+            dbHandler.deleteData(id, Delete.this);
         });
 
 
