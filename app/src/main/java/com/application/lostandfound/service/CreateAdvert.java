@@ -1,21 +1,43 @@
 package com.application.lostandfound.service;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.application.lostandfound.MainActivity;
 import com.application.lostandfound.R;
 import com.application.lostandfound.db.DBHandler;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
 
 public class CreateAdvert extends AppCompatActivity {
 
-    // creating variables for our edittext, button and dbhandler
-    private EditText nameEdt, phoneEdt, descriptionEdt, dateEdt, locationEdt;
-    private Button createAdvertBtn;
+    // creating variables for our edittext, button and dbHandler
+    public EditText nameEdt, phoneEdt, descriptionEdt, dateEdt, locationEdt;
+    private Button createAdvertBtn, getLocationBtn;
     private DBHandler dbHandler;
 
     @Override
@@ -30,10 +52,27 @@ public class CreateAdvert extends AppCompatActivity {
         dateEdt = findViewById(R.id.productDateEditText);
         locationEdt = findViewById(R.id.productLocationEditText);
         createAdvertBtn = findViewById(R.id.createAdvertBtn);
+        getLocationBtn = findViewById(R.id.getLocationBtn);
 
-        // creating a new dbhandler class
+        if (getIntent().getStringExtra("location")=="" || getIntent().getStringExtra("location")==null || getIntent().getStringExtra("location").isEmpty()) {
+            getLocationBtn.setEnabled(true);
+        } else {
+            locationEdt.setText(getIntent().getStringExtra("location"));
+            getLocationBtn.setEnabled(false);
+        }
+
+        // creating a new dbHandler class
         // and passing our context to it.
         dbHandler = new DBHandler(CreateAdvert.this);
+
+        // adding on click listener to our button.
+
+        getLocationBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(CreateAdvert.this, GetLocation.class);
+            startActivity(intent);
+
+        });
+
 
         // adding on click listener to our button.
         createAdvertBtn.setOnClickListener(v -> {
@@ -56,7 +95,7 @@ public class CreateAdvert extends AppCompatActivity {
             } else {
                 // if the text fields are not empty
                 // then call the below method.
-                dbHandler.addData(name, phone, description, date, location);
+                dbHandler.addData(name, phone, description, date, location, getIntent().getStringExtra("latitude"), getIntent().getStringExtra("longitude"));
 
                 nameEdt.setText("");
                 phoneEdt.setText("");
@@ -66,10 +105,19 @@ public class CreateAdvert extends AppCompatActivity {
 
                 // after adding the data we are displaying a toast message.
                 Toast.makeText(CreateAdvert.this, "Advert has been created", Toast.LENGTH_SHORT).show();
+
+                // and we are also redirecting our user to our login page.
+                Intent intent = new Intent(CreateAdvert.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
-
-
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CreateAdvert.this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }

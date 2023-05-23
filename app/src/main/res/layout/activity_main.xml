@@ -10,7 +10,7 @@
         android:id="@+id/createAdvertBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/rounded_corner"
         android:text="Create A New Advert"
         android:textColor="@color/white"
@@ -25,7 +25,7 @@
         android:id="@+id/showAndFoundBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/rounded_corner"
         android:text="Show All Lost And Found Items"
         android:textColor="@color/white"
@@ -35,6 +35,21 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAdvertBtn" />
+
+    <Button
+        android:id="@+id/showOnMapBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/rounded_corner"
+        android:text="Show All Lost And Found Items On Map"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showAndFoundBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

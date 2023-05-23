@@ -8,14 +8,23 @@ public class LostAndFound {
     private String _Description;
     private String _Date;
     private String _Location;
+    private String _Latitude;
+    private String _Longitude;
 
-    public LostAndFound(String _Id, String _Name, String _Phone, String _Description, String _Date, String _Location) {
+    public LostAndFound(String _Id, String _Name, String _Phone, String _Description, String _Date, String _Location, String _Latitude, String _Longitude) {
         this._Id = _Id;
         this._Name = _Name;
         this._Phone = _Phone;
         this._Description = _Description;
         this._Date = _Date;
         this._Location = _Location;
+        this._Latitude = _Latitude;
+        this._Longitude = _Longitude;
+    }
+
+    public LostAndFound(String _Latitude, String _Longitude) {
+        this._Latitude = _Latitude;
+        this._Longitude = _Longitude;
     }
 
     public String get_Id() {
@@ -64,5 +73,21 @@ public class LostAndFound {
 
     public void set_Location(String _Location) {
         this._Location = _Location;
+    }
+
+    public String get_Latitude() {
+        return _Latitude;
+    }
+
+    public void set_Latitude(String _Latitude) {
+        this._Latitude = _Latitude;
+    }
+
+    public String get_Longitude() {
+        return _Longitude;
+    }
+
+    public void set_Longitude(String _Longitude) {
+        this._Longitude = _Longitude;
     }
 }
