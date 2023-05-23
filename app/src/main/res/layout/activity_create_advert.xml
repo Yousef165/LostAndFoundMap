@@ -156,6 +156,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:enabled="false"
                 android:id="@+id/productLocation"
                 android:layout_margin="10dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

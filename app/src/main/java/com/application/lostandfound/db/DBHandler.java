@@ -8,16 +8,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.application.lostandfound.MainActivity;
+import com.application.lostandfound.model.Location;
 import com.application.lostandfound.model.LostAndFound;
 import com.application.lostandfound.service.Delete;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
 
     // creating a constant variables for our database.
     // below variable is for our database name.
-    private static final String DB_NAME = "lostandfounddb";
+    private static final String DB_NAME = "LostAndFoundDB";
 
     // below int is our database version
     private static final int DB_VERSION = 1;
@@ -42,6 +45,12 @@ public class DBHandler extends SQLiteOpenHelper {
     // below variable is for our data name column
     private static final String  LOCATION_COL = "location";
 
+    // below variable id for our data latitude column.
+    private static final String LATITUDE_COL = "latitude";
+
+    // below variable id for our data longitude column.
+    private static final String LONGITUDE_COL = "longitude";
+
     // creating a constructor for our database handler.
     public DBHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -60,7 +69,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 + PHONE_COL + " TEXT,"
                 + DESCRIPTION_COL + " TEXT,"
                 + DATE_COL + " TEXT,"
-                + LOCATION_COL + " TEXT)";
+                + LOCATION_COL + " TEXT,"
+                + LATITUDE_COL + " TEXT,"
+                + LONGITUDE_COL + " TEXT)";
 
         // at last we are calling a exec sql
         // method to execute above sql query
@@ -68,7 +79,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // this method is use to add new data to our sqlite database.
-    public void addData(String Name, String Phone, String Description, String Date, String Location) {
+    public void addData(String Name, String Phone, String Description, String Date, String Location, String Latitude, String Longitude) {
 
         // on below line we are creating a variable for
         // our sqlite database and calling writable method
@@ -87,8 +98,8 @@ public class DBHandler extends SQLiteOpenHelper {
             values.put(DESCRIPTION_COL, Description);
             values.put(DATE_COL, Date);
             values.put(LOCATION_COL, Location);
-
-
+            values.put(LATITUDE_COL, Latitude);
+            values.put(LONGITUDE_COL, Longitude);
 
         // after adding all values we are passing
         // content values to our table.
@@ -125,7 +136,9 @@ public class DBHandler extends SQLiteOpenHelper {
                         cursorDatas.getString(2),
                         cursorDatas.getString(3),
                         cursorDatas.getString(4),
-                        cursorDatas.getString(5)));
+                        cursorDatas.getString(5),
+                        cursorDatas.getString(6),
+                        cursorDatas.getString(7)));
 
             } while (cursorDatas.moveToNext());
             // moving our cursor to next.
@@ -135,6 +148,31 @@ public class DBHandler extends SQLiteOpenHelper {
         cursorDatas.close();
         return LostAndFoundArrayList;
     }
+
+
+    public List<LatLng> getLocations() {
+        List<LatLng> locations = new ArrayList<>();
+
+        // Retrieve data from SQLite using appropriate queries
+        // Assuming you have a "locations" table with "latitude" and "longitude" columns
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(TABLE_NAME, new String[]{LATITUDE_COL, LONGITUDE_COL}, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(LATITUDE_COL));
+                double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(LONGITUDE_COL));
+                LatLng location = new LatLng(latitude, longitude);
+                locations.add(location);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        database.close();
+
+        return locations;
+    }
+
 
     // delete data from database by id
     public void deleteData(String id, Context context) {

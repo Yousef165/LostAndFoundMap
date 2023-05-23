@@ -66,6 +66,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>{
                 bundle.putString("description", modal.get_Description());
                 bundle.putString("date", modal.get_Date());
                 bundle.putString("location", modal.get_Location());
+                bundle.putString("latitude", modal.get_Latitude());
+                bundle.putString("longitude", modal.get_Longitude());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
 

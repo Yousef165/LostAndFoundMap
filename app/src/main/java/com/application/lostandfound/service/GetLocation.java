@@ -79,6 +79,8 @@ public class GetLocation extends AppCompatActivity implements OnMapReadyCallback
                                         public void run() {
                                             Intent intent = new Intent(GetLocation.this, CreateAdvert.class);
                                             intent.putExtra("location", currentLocation.toString());
+                                            intent.putExtra("latitude", latitude);
+                                            intent.putExtra("longitude", longitude);
                                             startActivity(intent);
                                         }
                                     },5000);

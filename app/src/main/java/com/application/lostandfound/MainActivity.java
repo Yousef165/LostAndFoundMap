@@ -8,10 +8,11 @@ import android.widget.Button;
 
 import com.application.lostandfound.service.CreateAdvert;
 import com.application.lostandfound.service.ShowAndFound;
+import com.application.lostandfound.service.ShowOnMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button createAdvertBtn, showAndFoundBtn;
+    Button createAdvertBtn, showAndFoundBtn, showOnMapBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +21,13 @@ public class MainActivity extends AppCompatActivity {
 
         createAdvertBtn = findViewById(R.id.createAdvertBtn);
         showAndFoundBtn = findViewById(R.id.showAndFoundBtn);
+        showOnMapBtn = findViewById(R.id.showOnMapBtn);
 
         createAdvertBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CreateAdvert.class);
+            intent.putExtra("location", "");
+            intent.putExtra("latitude", "");
+            intent.putExtra("longitude", "");
             startActivity(intent);
         });
 
@@ -31,5 +36,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        showOnMapBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ShowOnMap.class);
+            startActivity(intent);
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 }
