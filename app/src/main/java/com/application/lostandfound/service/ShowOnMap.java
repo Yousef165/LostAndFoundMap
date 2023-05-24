@@ -62,13 +62,16 @@ public class ShowOnMap extends AppCompatActivity implements OnMapReadyCallback {
         googleMap = map;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.4219983, -122.084)));
         //Retrieve latitude and longitude data from SQLite
 
         List<LatLng> locations = dbHandler.getLocations();
 
         //  Add markers to the map
         for (LatLng location : locations) {
-            googleMap.addMarker(new MarkerOptions().position(location));
+            System.out.println("Location: 1111111" + location);
+            googleMap.addMarker(new MarkerOptions().position(location))
+                    .setTitle("Lost and Found Item");
         }
 
     }

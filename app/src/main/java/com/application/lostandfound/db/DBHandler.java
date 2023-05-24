@@ -160,8 +160,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(LATITUDE_COL));
-                double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(LONGITUDE_COL));
+                double latitude = Double.parseDouble(cursor.getString(0));
+                double longitude = Double.parseDouble(cursor.getString(1));
                 LatLng location = new LatLng(latitude, longitude);
                 locations.add(location);
             } while (cursor.moveToNext());
